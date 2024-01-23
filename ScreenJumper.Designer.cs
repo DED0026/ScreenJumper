@@ -37,14 +37,20 @@
             this.UpdatePos.Interval = 1;
             this.UpdatePos.Tick += new System.EventHandler(this.UpdatePos_Tick);
             // 
-            // Form1
+            // ScreenJumper
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(309, 235);
+            this.BackColor = System.Drawing.Color.Black;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.ClientSize = new System.Drawing.Size(225, 244);
             this.DoubleBuffered = true;
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
-            this.Name = "Form1";
+            this.MaximizeBox = false;
+            this.MinimizeBox = false;
+            this.Name = "ScreenJumper";
+            this.ShowIcon = false;
+            this.TransparencyKey = System.Drawing.Color.Black;
             this.Load += new System.EventHandler(this.Form1_Load);
             this.ResumeLayout(false);
 

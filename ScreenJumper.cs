@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Drawing;
-using System.Linq;
 using System.Windows.Forms;
 
 namespace ScreenJumper
@@ -8,17 +7,17 @@ namespace ScreenJumper
     public partial class ScreenJumper : Form
     {
         Size Screenbounds;
-        Point meow; // = new Point(40,0);
+        Point Velocity;
         private Random rnd = new Random();
 
         public ScreenJumper() => InitializeComponent();
         private void Form1_Load(object sender, EventArgs e)
         {
             //assign the available screen space
-            Screenbounds = Screen.PrimaryScreen.Bounds.Size - Size;
+            Screenbounds = Screen.PrimaryScreen.WorkingArea.Size - Size;
 
             //randomize speed
-            meow = new Point(rnd.Next(0, Screenbounds.Width / 40), rnd.Next(0, Screenbounds.Height / 40));
+            Velocity = new Point(rnd.Next(0, Screenbounds.Width / 40), rnd.Next(0, Screenbounds.Height / 40));
 
             //start the mover
             UpdatePos.Start();
@@ -27,20 +26,22 @@ namespace ScreenJumper
         void randomize()
         {
             //randomize color in 100-255 range
-            BackColor = Color.FromArgb(rnd.Next(100, 255), rnd.Next(100, 255), rnd.Next(100, 255));
+            BackColor = Color.FromArgb(rnd.Next(50, 255), rnd.Next(50, 255), rnd.Next(50, 255));
         }
 
         private void UpdatePos_Tick(object sender, EventArgs e)
         {
-            Location = new Point(Location.X + meow.X, Location.Y + meow.Y);
-            if (!Enumerable.Range(0, Screenbounds.Height).Contains(Location.Y))
+            Location = new Point(Location.X + Velocity.X, Location.Y + Velocity.Y);
+
+            if (!(Location.Y > 0 && Location.Y < Screenbounds.Height))
             {
-                meow = new Point(meow.X, -meow.Y);
+                Velocity = new Point(Velocity.X, -Velocity.Y);
                 randomize();
             }
-            if (!Enumerable.Range(0, Screenbounds.Width).Contains(Location.X))
+
+            if (!(Location.X > 0 && Location.X < Screenbounds.Width))
             {
-                meow = new Point(-meow.X, meow.Y);
+                Velocity = new Point(-Velocity.X, Velocity.Y);
                 randomize();
             }
         }
